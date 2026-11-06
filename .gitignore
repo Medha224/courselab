@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+client/node_modules/
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Build output
+# We can track client/dist or let it be built, but keeping client/dist tracked allows someone to run `npm start` immediately upon cloning without needing to build client!
+# However, client/dist is lightweight (300KB), let's track it or let's include it. Actually, keeping client/dist tracked means zero setup for anyone cloning!
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

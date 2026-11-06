@@ -1,0 +1,379 @@
+/* ==========================================================================
+   ACADEMIC / EDUCATIONAL THEME (Inspired by Classic University & Course UI)
+   Palette: Warm Amber Gold (#ffb606), Crisp White (#ffffff), Deep Charcoal (#1c1d21 / #2b2b36), Soft Canvas (#f7f9fc)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Theme Colors */
+  --amber-primary: #ffb606;
+  --amber-hover: #e5a200;
+  --amber-light: #fff8e6;
+  --amber-border: #fed56b;
+
+  --charcoal-dark: #18191d;
+  --charcoal-card: #22232a;
+  --charcoal-light: #2d2e38;
+
+  --bg-page: #f6f8fb;
+  --bg-white: #ffffff;
+  --bg-card: #ffffff;
+  --bg-subtle: #f1f4f9;
+
+  --border-light: #e4e8f0;
+  --border-subtle: #edf2f7;
+
+  --text-dark: #1a1e28;
+  --text-body: #4a5568;
+  --text-muted: #718096;
+  --text-white: #ffffff;
+
+  --success: #10b981;
+  --success-bg: #ecfdf5;
+  --danger: #ef4444;
+  --danger-bg: #fef2f2;
+  --blue: #2563eb;
+  --blue-bg: #eff6ff;
+
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-page);
+  color: var(--text-dark);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-page);
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Container */
+.edu-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--text-dark);
+  letter-spacing: -0.02em;
+}
+
+/* Buttons */
+.edu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 11px 22px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+.edu-btn-amber {
+  background-color: var(--amber-primary);
+  color: var(--charcoal-dark);
+  box-shadow: 0 4px 12px rgba(255, 182, 6, 0.3);
+}
+.edu-btn-amber:hover:not(:disabled) {
+  background-color: var(--amber-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(255, 182, 6, 0.4);
+}
+
+.edu-btn-dark {
+  background-color: var(--charcoal-dark);
+  color: #ffffff;
+}
+.edu-btn-dark:hover:not(:disabled) {
+  background-color: #000000;
+  transform: translateY(-1px);
+}
+
+.edu-btn-outline {
+  background-color: transparent;
+  border: 1.5px solid var(--border-light);
+  color: var(--text-dark);
+}
+.edu-btn-outline:hover:not(:disabled) {
+  background-color: var(--bg-subtle);
+  border-color: #cbd5e1;
+}
+
+.edu-btn-success {
+  background-color: var(--success);
+  color: #ffffff;
+}
+.edu-btn-success:hover:not(:disabled) {
+  background-color: #059669;
+}
+
+.edu-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Inputs & Form Elements */
+.edu-input, .edu-textarea {
+  width: 100%;
+  font-family: var(--font-body);
+  background-color: var(--bg-white);
+  border: 1.5px solid var(--border-light);
+  color: var(--text-dark);
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.edu-input:focus, .edu-textarea:focus {
+  border-color: var(--amber-primary);
+  box-shadow: 0 0 0 3px rgba(255, 182, 6, 0.2);
+}
+
+.edu-textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* Cards */
+.edu-card {
+  background: var(--bg-white);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.edu-card-dark {
+  background: var(--charcoal-card);
+  color: #ffffff;
+  border: 1px solid var(--charcoal-light);
+  border-radius: 8px;
+  padding: 24px;
+}
+
+/* Educational Highlight Box (like 'Get your Education today!' in image) */
+.edu-highlight {
+  display: inline-block;
+  background-color: var(--amber-primary);
+  color: var(--charcoal-dark);
+  padding: 2px 10px;
+  font-weight: 800;
+  border-radius: 2px;
+}
+
+/* Badges */
+.edu-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.edu-badge-amber {
+  background-color: var(--amber-light);
+  color: #925f00;
+  border: 1px solid var(--amber-border);
+}
+
+.edu-badge-dark {
+  background-color: var(--charcoal-dark);
+  color: #ffffff;
+}
+
+.edu-badge-green {
+  background-color: var(--success-bg);
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.edu-badge-blue {
+  background-color: var(--blue-bg);
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+/* Workspace Tabs */
+.edu-tabs {
+  display: flex;
+  gap: 6px;
+  background: var(--bg-white);
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.edu-tab-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  padding: 12px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.edu-tab-btn:hover {
+  color: var(--text-dark);
+  background: var(--bg-subtle);
+}
+
+.edu-tab-btn.active {
+  background: var(--charcoal-dark);
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+.edu-tab-btn.active .edu-tab-badge {
+  background-color: var(--amber-primary);
+  color: var(--charcoal-dark);
+}
+
+.edu-tab-badge {
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: var(--bg-subtle);
+  color: var(--text-body);
+}
+
+/* Code & Pre */
+pre {
+  background: #1e1e24 !important;
+  color: #f8fafc;
+  border-radius: 6px;
+  padding: 16px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  margin: 14px 0;
+  border: 1px solid #2d2d38;
+}
+
+code {
+  font-family: var(--font-mono);
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.88em;
+  color: #925f00;
+}
+pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+/* Modals */
+.edu-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 19, 24, 0.65);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.edu-modal-content {
+  background: var(--bg-white);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 32px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-light);
+}
+
+/* Clean score dial */
+.edu-score-dial {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  border: 3px solid;
+}
+.edu-score-dial.excellent {
+  border-color: var(--amber-primary);
+  background-color: var(--amber-light);
+  color: #8c5a00;
+}
+
+/* Animations */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.spin {
+  animation: spin 1s linear infinite;
+}
