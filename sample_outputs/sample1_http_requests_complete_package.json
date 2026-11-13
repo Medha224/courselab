@@ -5,7 +5,7 @@
   "researchBundle": {
     "query": "HTTP Requests and Responses",
     "learningObjective": "Explain GET and POST methods and distinguish between 2xx, 4xx, and 5xx response status categories.",
-    "researchedAt": "2026-11-06T16:04:53.208Z",
+    "researchedAt": "2026-11-13T17:06:46.386Z",
     "books": [
       {
         "title": "HTTP: The Definitive Guide",
@@ -133,10 +133,10 @@
         "authoritative": false
       },
       {
-        "title": "HTTP persistent connection",
+        "title": "List of HTTP header fields",
         "publisher": "Wikipedia Encyclopedia",
-        "url": "https://en.wikipedia.org/wiki/HTTP_persistent_connection",
-        "description": "receive multiple HTTP requests/responses, as opposed to opening a new connection for every single request/response pair. The newer HTTP/2 protocol uses",
+        "url": "https://en.wikipedia.org/wiki/List_of_HTTP_header_fields",
+        "description": "Correlates HTTP requests between a client and server. Superseded by the traceparent header. For example: X-Request-ID: f058ebd6-02f7-4d3f-942e-904344e8cde5",
         "authoritative": false
       }
     ],
@@ -571,10 +571,10 @@
         "type": "Web & Specification"
       },
       {
-        "title": "HTTP persistent connection",
+        "title": "List of HTTP header fields",
         "publisher": "Wikipedia Encyclopedia",
-        "url": "https://en.wikipedia.org/wiki/HTTP_persistent_connection",
-        "description": "receive multiple HTTP requests/responses, as opposed to opening a new connection for every single request/response pair. The newer HTTP/2 protocol uses",
+        "url": "https://en.wikipedia.org/wiki/List_of_HTTP_header_fields",
+        "description": "Correlates HTTP requests between a client and server. Superseded by the traceparent header. For example: X-Request-ID: f058ebd6-02f7-4d3f-942e-904344e8cde5",
         "authoritative": false,
         "type": "Web & Specification"
       }
@@ -582,7 +582,7 @@
   },
   "qc1Report": {
     "layer": "QC Layer 1: Research and Factual Accuracy",
-    "auditTimestamp": "2026-11-06T16:04:53.215Z",
+    "auditTimestamp": "2026-11-13T17:06:46.389Z",
     "overallScore": 96,
     "verdict": "PASSED_WITH_RECOMMENDATIONS",
     "metrics": {
@@ -668,7 +668,7 @@
   },
   "qc2Report": {
     "layer": "QC Layer 2: Instructional Quality",
-    "auditTimestamp": "2026-11-06T16:04:53.218Z",
+    "auditTimestamp": "2026-11-13T17:06:46.390Z",
     "overallScore": 95,
     "verdict": "PASSED_WITH_RECOMMENDATIONS",
     "pacingAudit": {
@@ -739,5 +739,5 @@
     ],
     "summary": "### QC Layer 2 Summary: Exceptional Pedagogical Design\nThe lesson exhibits pristine alignment with the stated learning objective (98% alignment score). It effectively guides learners from concrete mental models through protocol theory, hands-on debugging scenarios, and formative knowledge checks. Cognitive pacing fits comfortably into a 45-minute lesson without informational overload."
   },
-  "updatedAt": "2026-11-06T16:04:53.218Z"
+  "updatedAt": "2026-11-13T17:06:46.390Z"
 }

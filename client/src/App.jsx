@@ -454,6 +454,7 @@ export default function App() {
         onResearchOnly={handleResearchOnly}
         onClear={handleClear}
         loading={loading}
+        hasLesson={Boolean(lesson?.lessonContent)}
       />
 
       {/* Error Message */}

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { X, FileText, Code, FileCode, Check, Copy, Download } from 'lucide-react';
+import { X, FileText, Code, FileCode, Check, Copy, Download, BookOpen } from 'lucide-react';
 
 export default function ExportModal({ lesson, onClose }) {
-  const [includeQC, setIncludeQC] = useState(true);
   const [copied, setCopied] = useState(false);
 
   if (!lesson) return null;
@@ -12,7 +11,7 @@ export default function ExportModal({ lesson, onClose }) {
       const res = await fetch(`/api/lesson/export/${format}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ lesson, includeQC })
+        body: JSON.stringify({ lesson })
       });
 
       if (!res.ok) throw new Error('Export download failed');
@@ -37,7 +36,7 @@ export default function ExportModal({ lesson, onClose }) {
       const res = await fetch('/api/lesson/export/markdown', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ lesson, includeQC })
+        body: JSON.stringify({ lesson })
       });
       const text = await res.text();
       await navigator.clipboard.writeText(text);
@@ -51,13 +50,13 @@ export default function ExportModal({ lesson, onClose }) {
   return (
     <div className="edu-modal-overlay" onClick={onClose}>
       <div className="edu-modal-content" onClick={(e) => e.stopPropagation()}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' }}>
           <div>
             <h3 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0, color: 'var(--text-dark)' }}>
-              Export Lesson Package
+              Export Complete Lesson
             </h3>
-            <p style={{ margin: '3px 0 0', fontSize: '0.82rem', color: 'var(--text-muted)' }}>
-              Choose your export format with optional Quality Control audit reports
+            <p style={{ margin: '4px 0 0', fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+              Exports exclusively the finalized 45-minute educational lesson plan ready for students and instructors
             </p>
           </div>
           <button
@@ -70,23 +69,21 @@ export default function ExportModal({ lesson, onClose }) {
           </button>
         </div>
 
-        {/* Checkbox */}
+        {/* Informative Scope Card */}
         <div style={{
-          background: 'var(--bg-subtle)',
+          background: 'var(--amber-light)',
+          border: '1px solid var(--amber-border)',
           padding: '12px 16px',
           borderRadius: '6px',
           marginBottom: '20px',
-          border: '1px solid var(--border-light)'
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px'
         }}>
-          <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', fontSize: '0.88rem', color: 'var(--text-dark)' }}>
-            <input
-              type="checkbox"
-              checked={includeQC}
-              onChange={(e) => setIncludeQC(e.target.checked)}
-              style={{ width: '16px', height: '16px', accentColor: '#ffb606' }}
-            />
-            <span>Include Quality Control Layer 1 & 2 Audit Reports in export</span>
-          </label>
+          <BookOpen size={18} color="#925f00" style={{ flexShrink: 0 }} />
+          <span style={{ fontSize: '0.82rem', color: '#784d00', fontWeight: 600 }}>
+            Includes: Title, 45-min timing plan, all lesson sections, code walkthroughs, practical lab, active recall quiz, video masterclasses, and references.
+          </span>
         </div>
 
         {/* Formats */}
@@ -107,10 +104,10 @@ export default function ExportModal({ lesson, onClose }) {
               </div>
               <div>
                 <h4 style={{ fontSize: '0.92rem', fontWeight: 800, margin: 0, color: 'var(--text-dark)' }}>
-                  Markdown Document (.md)
+                  Complete Lesson Markdown (.md)
                 </h4>
                 <p style={{ margin: 0, fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                  Standard GFM formatted document with tables, code, and QC appendix
+                  Clean GFM formatted document ready for LMS, GitHub, or Notion
                 </p>
               </div>
             </div>
@@ -154,10 +151,10 @@ export default function ExportModal({ lesson, onClose }) {
               </div>
               <div>
                 <h4 style={{ fontSize: '0.92rem', fontWeight: 800, margin: 0, color: 'var(--text-dark)' }}>
-                  Standalone Web Page (.html)
+                  Complete Lesson Web Page (.html)
                 </h4>
                 <p style={{ margin: 0, fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                  Self-contained document ready for browser viewing or Print-to-PDF
+                  Printable standalone webpage styled for direct viewing or Print-to-PDF
                 </p>
               </div>
             </div>
@@ -189,10 +186,10 @@ export default function ExportModal({ lesson, onClose }) {
               </div>
               <div>
                 <h4 style={{ fontSize: '0.92rem', fontWeight: 800, margin: 0, color: 'var(--text-dark)' }}>
-                  Complete JSON Package (.json)
+                  Complete Lesson JSON (.json)
                 </h4>
                 <p style={{ margin: 0, fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                  Machine-readable package of metadata, sections, and QC audit trees
+                  Structured lesson content payload (timing, sections, lab, quiz, references)
                 </p>
               </div>
             </div>

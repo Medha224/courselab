@@ -1,7 +1,7 @@
 # HTTP Requests and Responses
 
 **Target Duration**: 45 Minutes | **Level**: Foundational to Intermediate
-**Exported**: 6/11/2026
+**Exported**: 13/11/2026
 
 ## 🎯 Learning Objective
 > Explain GET and POST methods and distinguish between 2xx, 4xx, and 5xx response status categories.
@@ -213,7 +213,7 @@ Explore the curated YouTube lessons and authoritative specifications below to ce
 
 ---
 
-## 🛠️ Hands-on Activity: API Incident Triage & Wire-Level Packet Inspection (10 Min)
+## 🛠️ Hands-on Practical Lab: API Incident Triage & Wire-Level Packet Inspection (10 Min)
 
 **Scenario**: You are on call for an e-commerce platform. Diagnose 3 wireframe requests and assign correct methods and status codes.
 
@@ -224,7 +224,7 @@ Explore the curated YouTube lessons and authoritative specifications below to ce
 
 **Expected Outcome**: Zero ambiguity on client fault (4xx) vs server fault (5xx) and safe GET vs mutating POST.
 
-*Hint*: Refer to RFC 9110 Section 9 and 15.
+*Instructor Solution Guidance*: Refer to RFC 9110 Section 9 and 15.
 
 ---
 
@@ -232,7 +232,7 @@ Explore the curated YouTube lessons and authoritative specifications below to ce
 
 **Question 1**: Which of the following statements accurately characterizes the HTTP GET method according to RFC 9110?
 
-- [x] **Option A**: GET is safe and idempotent, meaning it must not modify server state and repeated calls yield identical side effects. *(Correct)*
+- [x] **Option A**: GET is safe and idempotent, meaning it must not modify server state and repeated calls yield identical side effects. *(Correct Answer)*
 - [ ] **Option B**: GET is encrypted by default, whereas POST transmits data in plaintext.
 - [ ] **Option C**: GET is non-idempotent because web servers log each visit in their access logs.
 - [ ] **Option D**: GET requests must always carry a JSON payload in their request body.
@@ -242,7 +242,7 @@ Explore the curated YouTube lessons and authoritative specifications below to ce
 **Question 2**: A client submits an order via POST /api/orders. The server successfully processes the payment and creates record #402. What status code and header combination should the server return?
 
 - [ ] **Option A**: 200 OK with no headers
-- [x] **Option B**: 201 Created with a Location header pointing to /api/orders/402 *(Correct)*
+- [x] **Option B**: 201 Created with a Location header pointing to /api/orders/402 *(Correct Answer)*
 - [ ] **Option C**: 204 No Content with a Set-Cookie header
 - [ ] **Option D**: 400 Bad Request with an error description
 
@@ -252,14 +252,14 @@ Explore the curated YouTube lessons and authoritative specifications below to ce
 
 - [ ] **Option A**: 2xx Success, because the request was received
 - [ ] **Option B**: 4xx Client Error, because the client should retry later
-- [x] **Option C**: 5xx Server Error (e.g. 500 or 503), because the failure originated on the server *(Correct)*
+- [x] **Option C**: 5xx Server Error (e.g. 500 or 503), because the failure originated on the server *(Correct Answer)*
 - [ ] **Option D**: 3xx Redirection, to point the user to another website
 
 *Explanation*: 5xx status codes indicate cases where the server is aware that it has erred or is incapable of performing the request. Since the database crashed, it is a 5xx Server Error.
 
 ---
 
-## 📺 Supplementary Video Resources
+## 📺 Supplementary Video Masterclasses
 
 ### [HTTP Crash Course & Exploration](https://www.youtube.com/watch?v=iYM2zFP3Zn0)
 - **Channel**: Traversy Media | **Duration**: 38:12
@@ -287,7 +287,7 @@ Explore the curated YouTube lessons and authoritative specifications below to ce
 
 ---
 
-## 📖 Authoritative References & Further Reading
+## 📖 Authoritative References & Academic Citations
 
 1. **[Book] HTTP: The Definitive Guide** by David Gourley, Brian Totty, Marjorie Sayer, Sailu Reddy, Anshu Aggarwal (O'Reilly Media, 2002)
    - URL: [https://www.oreilly.com/library/view/http-the-definitive/1565925092/](https://www.oreilly.com/library/view/http-the-definitive/1565925092/)
@@ -337,61 +337,6 @@ Explore the curated YouTube lessons and authoritative specifications below to ce
 12. **[Web & Specification] List of HTTP status codes** (Wikipedia Encyclopedia)
    - URL: [https://en.wikipedia.org/wiki/List_of_HTTP_status_codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)
 
-13. **[Web & Specification] HTTP persistent connection** (Wikipedia Encyclopedia)
-   - URL: [https://en.wikipedia.org/wiki/HTTP_persistent_connection](https://en.wikipedia.org/wiki/HTTP_persistent_connection)
-
-
-
-# 📋 APPENDIX: QUALITY CONTROL AUDIT REPORTS
-
-## QC Layer 1: Research and Factual Accuracy Audit
-
-- **Overall Score**: **96/100** (PASSED_WITH_RECOMMENDATIONS)
-- **Audit Timestamp**: 2026-11-06T16:04:53.215Z
-- **Factual Correctness**: 98% | **Source Reliability**: 96%
-
-### QC Layer 1 Summary: High Factual Precision
-The lesson content demonstrates exceptional factual accuracy (Score: 96/100). All core assertions regarding GET/POST idempotency, safe method semantics, and status code categories (2xx, 4xx, 5xx) strictly adhere to IETF RFC 9110. Three minor technical precision enhancements were identified to eliminate common edge-case misconceptions.
-
-### Identified Factual Enhancements & Observations
-
-#### 1. [LOW] Specification Clarification: GET requests transmit data exclusively through URI query strings.
-- **Issue**: While standard web browsers transmit GET data in URI query strings, RFC 9110 does not strictly forbid a message body in GET requests, though it warns that many caching proxies and servers ignore or reject GET bodies.
-- **Authoritative Standard**: RFC 9110 Section 9.3.1 (GET)
-- **Suggested Recommendation**: Note on RFC 9110 Section 9.3.1: Although HTTP technically permits a body in GET requests, sending a payload with GET has undefined semantics across many CDNs and reverse proxies and should be avoided in practice.
-- **Status**: Pending Instructor Review
-
-#### 2. [MEDIUM] Edge Case & Status Code Nuance: 204 No Content indicates success without a response body.
-- **Issue**: While 204 No Content is accurately defined, the lesson should explicitly emphasize that servers MUST NOT send a message body with a 204 response (and Content-Length must be 0 or omitted).
-- **Authoritative Standard**: RFC 9110 Section 15.3.5 (204 No Content)
-- **Suggested Recommendation**: Strict Protocol Rule: For 204 No Content, a server MUST NOT generate a response body, and clients must treat any received body as an anomaly.
-- **Status**: Pending Instructor Review
-
-#### 3. [LOW] Authentication vs Authorization Clarification: 401 Unauthorized vs 403 Forbidden
-- **Issue**: The HTTP spec historically used the word "Unauthorized" for 401 when it strictly means "Unauthenticated". Clarifying this historical naming anomaly helps prevent deep student confusion.
-- **Authoritative Standard**: RFC 9110 Section 15.5.2
-- **Suggested Recommendation**: Historical RFC Quirk: Status 401 is named "Unauthorized", but semantically represents "Unauthenticated" (missing or invalid credentials). Status 403 represents "Forbidden" (authenticated, but lacking authorized privileges).
-- **Status**: Pending Instructor Review
-
-## QC Layer 2: Instructional Quality & Pacing Audit
-
-- **Overall Score**: **95/100** (PASSED_WITH_RECOMMENDATIONS)
-- **Audit Timestamp**: 2026-11-06T16:04:53.218Z
-- **Estimated Completion**: 42 min (Target: 45 min)
-- **Word Count**: 1370 words
-
-### QC Layer 2 Summary: Exceptional Pedagogical Design
-The lesson exhibits pristine alignment with the stated learning objective (98% alignment score). It effectively guides learners from concrete mental models through protocol theory, hands-on debugging scenarios, and formative knowledge checks. Cognitive pacing fits comfortably into a 45-minute lesson without informational overload.
-
-### Identified Pedagogical Scaffolding Observations
-
-#### 1. [LOW] Scaffolding & Visual Intuition: Section 1 (Mental Model)
-- **Issue**: While the text description of the request-response cycle is clear, incorporating a compact ASCII sequence diagram will dramatically reduce cognitive load for visual learners.
-- **Recommendation**: Add an ASCII sequence diagram showing Client -> Request Header/Body -> Server -> Response Status/Headers/Payload.
-- **Status**: Pending Instructor Review
-
-#### 2. [MEDIUM] Active Recall & Reflection: Section 5 (Hands-on Activity)
-- **Issue**: In the Incident Triage hands-on exercise, learners would benefit from an explicit rubric or "self-check" checklist before advancing to the quiz.
-- **Recommendation**: Add a 3-point self-assessment rubric (Did you verify: 1. Method safety, 2. Header presence, 3. Fault attribution).
-- **Status**: Pending Instructor Review
+13. **[Web & Specification] List of HTTP header fields** (Wikipedia Encyclopedia)
+   - URL: [https://en.wikipedia.org/wiki/List_of_HTTP_header_fields](https://en.wikipedia.org/wiki/List_of_HTTP_header_fields)
 

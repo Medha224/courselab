@@ -1,7 +1,7 @@
 # Binary Search Algorithms: Divide and Conquer
 
 **Target Duration**: 45 Minutes | **Level**: Intermediate
-**Exported**: 6/11/2026
+**Exported**: 13/11/2026
 
 ## 🎯 Learning Objective
 > Explain the divide-and-conquer principle of binary search, implement the iterative and recursive variants, and analyze its O(log n) time complexity against linear search.
@@ -164,7 +164,7 @@ Hence, the maximum number of iterations is $\lfloor\log_2 n\rfloor + 1 = \mathca
 
 ---
 
-## 🛠️ Hands-on Activity: Binary Search Boundary Debugging Lab (10 Min)
+## 🛠️ Hands-on Practical Lab: Binary Search Boundary Debugging Lab (10 Min)
 
 **Scenario**: Analyze off-by-one errors and integer overflow in competitive programming implementations.
 
@@ -175,7 +175,7 @@ Hence, the maximum number of iterations is $\lfloor\log_2 n\rfloor + 1 = \mathca
 
 **Expected Outcome**: Deep appreciation of boundary invariants and flawless bug-free implementation.
 
-*Hint*: Refer to Cormen et al. Exercise 2.3-5 and Joshua Bloch Google Research analysis.
+*Instructor Solution Guidance*: Refer to Cormen et al. Exercise 2.3-5 and Joshua Bloch Google Research analysis.
 
 ---
 
@@ -183,7 +183,7 @@ Hence, the maximum number of iterations is $\lfloor\log_2 n\rfloor + 1 = \mathca
 
 **Question 1**: What is the fundamental prerequisite for binary search to correctly locate an element?
 
-- [x] **Option A**: The array elements must be monotonically sorted in a defined order. *(Correct)*
+- [x] **Option A**: The array elements must be monotonically sorted in a defined order. *(Correct Answer)*
 - [ ] **Option B**: The array size must be a power of two.
 - [ ] **Option C**: The array must contain only positive integers.
 - [ ] **Option D**: The array must be indexed using a hash map.
@@ -193,7 +193,7 @@ Hence, the maximum number of iterations is $\lfloor\log_2 n\rfloor + 1 = \mathca
 **Question 2**: Why is `mid = low + (high - low) // 2` preferred over `mid = (low + high) // 2` in typed languages like C++ and Java?
 
 - [ ] **Option A**: It runs in fewer CPU clock cycles.
-- [x] **Option B**: It prevents integer overflow when the sum of low and high exceeds the maximum 32-bit signed integer value. *(Correct)*
+- [x] **Option B**: It prevents integer overflow when the sum of low and high exceeds the maximum 32-bit signed integer value. *(Correct Answer)*
 - [ ] **Option C**: It works on floating point numbers, whereas the latter only works on integers.
 - [ ] **Option D**: It automatically sorts the array during the calculation.
 
@@ -201,7 +201,7 @@ Hence, the maximum number of iterations is $\lfloor\log_2 n\rfloor + 1 = \mathca
 
 **Question 3**: How do the time and auxiliary space complexities of iterative vs recursive binary search compare on an array of length n?
 
-- [x] **Option A**: Both have O(log n) time; iterative has O(1) space, while recursive has O(log n) stack space. *(Correct)*
+- [x] **Option A**: Both have O(log n) time; iterative has O(1) space, while recursive has O(log n) stack space. *(Correct Answer)*
 - [ ] **Option B**: Iterative has O(log n) time; recursive has O(n) time.
 - [ ] **Option C**: Both have O(n) time and O(1) space.
 - [ ] **Option D**: Recursive has O(1) time and O(log n) space.
@@ -210,7 +210,7 @@ Hence, the maximum number of iterations is $\lfloor\log_2 n\rfloor + 1 = \mathca
 
 ---
 
-## 📺 Supplementary Video Resources
+## 📺 Supplementary Video Masterclasses
 
 ### [Binary Search in 100 Seconds](https://www.youtube.com/watch?v=MFhxShGxHWc)
 - **Channel**: Fireship | **Duration**: 02:18
@@ -237,7 +237,7 @@ Hence, the maximum number of iterations is $\lfloor\log_2 n\rfloor + 1 = \mathca
 
 ---
 
-## 📖 Authoritative References & Further Reading
+## 📖 Authoritative References & Academic Citations
 
 1. **[Book] Introduction to Algorithms (4th Edition)** by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein (MIT Press, 2022)
    - URL: [https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/)
@@ -287,50 +287,6 @@ Hence, the maximum number of iterations is $\lfloor\log_2 n\rfloor + 1 = \mathca
 12. **[Web & Specification] SAT solver** (Wikipedia Encyclopedia)
    - URL: [https://en.wikipedia.org/wiki/SAT_solver](https://en.wikipedia.org/wiki/SAT_solver)
 
-13. **[Web & Specification] Outline of algorithms** (Wikipedia Encyclopedia)
-   - URL: [https://en.wikipedia.org/wiki/Outline_of_algorithms](https://en.wikipedia.org/wiki/Outline_of_algorithms)
-
-
-
-# 📋 APPENDIX: QUALITY CONTROL AUDIT REPORTS
-
-## QC Layer 1: Research and Factual Accuracy Audit
-
-- **Overall Score**: **97/100** (PASSED_WITH_RECOMMENDATIONS)
-- **Audit Timestamp**: 2026-11-06T16:04:53.949Z
-- **Factual Correctness**: 99% | **Source Reliability**: 97%
-
-### QC Layer 1 Summary: Rigorous Mathematical & Factual Integrity
-The lesson exhibits 97/100 factual correctness. The divide-and-conquer recurrence, integer overflow remediation, and auxiliary space comparisons match standard peer-reviewed literature. Two non-critical clarifications regarding duplicate elements and bitwise arithmetic are recommended.
-
-### Identified Factual Enhancements & Observations
-
-#### 1. [LOW] Precision in Duplicate Elements: Binary search returns the index of the target element.
-- **Issue**: When an array contains duplicate copies of the target (e.g. [2, 4, 4, 4, 9]), standard binary search returns an arbitrary matching index, not necessarily the leftmost (lower_bound) or rightmost (upper_bound) occurrence.
-- **Authoritative Standard**: Knuth TAOCP Section 6.2.1
-- **Suggested Recommendation**: Note on Duplicate Elements: Standard binary search guarantees finding ANY occurrence of the target. For finding the first (leftmost) or last (rightmost) index in arrays with duplicate keys, bisect-left / bisect-right variants are required.
-- **Status**: Pending Instructor Review
-
-#### 2. [LOW] Bit-shift Optimization Insight: Mid calculation formula low + (high - low) // 2.
-- **Issue**: In performance-critical C/C++ systems, developers often write low + ((high - low) >> 1) using bitwise right-shift for integer division.
-- **Authoritative Standard**: Hacker's Delight (2nd Edition, Warren)
-- **Suggested Recommendation**: Bitwise Optimization: In systems programming, `low + ((high - low) >> 1)` is often used for fast division by 2, though modern compilers optimize integer division automatically.
-- **Status**: Pending Instructor Review
-
-## QC Layer 2: Instructional Quality & Pacing Audit
-
-- **Overall Score**: **96/100** (PASSED_WITH_RECOMMENDATIONS)
-- **Audit Timestamp**: 2026-11-06T16:04:53.949Z
-- **Estimated Completion**: 43 min (Target: 45 min)
-- **Word Count**: 919 words
-
-### QC Layer 2 Summary: Superior Pedagogical Scaffolding
-The lesson achieves 99% alignment with all three clauses of the learning objective. The progression from an everyday phone book intuition to rigorous recurrence derivation and boundary debugging creates high student engagement within the 45-minute timeframe.
-
-### Identified Pedagogical Scaffolding Observations
-
-#### 1. [LOW] Visual Tracing Scaffolding: Section 3 (Implementations)
-- **Issue**: While the Python code is clean, providing an explicit trace table of pointer values (low, mid, high, arr[mid]) on an example array greatly helps novice programmers visualize pointer updates.
-- **Recommendation**: Add a step-by-step trace table showing pointers over 3 iterations.
-- **Status**: Pending Instructor Review
+13. **[Web & Specification] Binary logarithm** (Wikipedia Encyclopedia)
+   - URL: [https://en.wikipedia.org/wiki/Binary_logarithm](https://en.wikipedia.org/wiki/Binary_logarithm)
 

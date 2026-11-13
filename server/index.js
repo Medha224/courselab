@@ -392,30 +392,31 @@ app.get('/api/lessons', (req, res) => {
   }
 });
 
-// Export endpoints
+// Export endpoints (exclusively provides complete lesson)
 app.post('/api/lesson/export/:format', (req, res) => {
   try {
     const { format } = req.params;
-    const { lesson, includeQC = true } = req.body;
+    const { lesson } = req.body;
 
     if (!lesson) {
       return res.status(400).json({ error: 'Lesson data required for export.' });
     }
 
     if (format === 'markdown') {
-      const markdown = exportService.toMarkdown(lesson, { includeQC });
+      const markdown = exportService.toMarkdown(lesson);
       res.setHeader('Content-Type', 'text/markdown');
       res.setHeader('Content-Disposition', `attachment; filename="${lesson.lessonTitle.replace(/[^a-zA-Z0-9_-]/g, '_')}_lesson.md"`);
       return res.send(markdown);
     } else if (format === 'html') {
-      const html = exportService.toHTML(lesson, { includeQC });
+      const html = exportService.toHTML(lesson);
       res.setHeader('Content-Type', 'text/html');
       res.setHeader('Content-Disposition', `attachment; filename="${lesson.lessonTitle.replace(/[^a-zA-Z0-9_-]/g, '_')}_lesson.html"`);
       return res.send(html);
     } else if (format === 'json') {
+      const lessonJson = exportService.toJSON(lesson);
       res.setHeader('Content-Type', 'application/json');
-      res.setHeader('Content-Disposition', `attachment; filename="${lesson.lessonTitle.replace(/[^a-zA-Z0-9_-]/g, '_')}_package.json"`);
-      return res.json(lesson);
+      res.setHeader('Content-Disposition', `attachment; filename="${lesson.lessonTitle.replace(/[^a-zA-Z0-9_-]/g, '_')}_lesson.json"`);
+      return res.json(lessonJson);
     } else {
       return res.status(400).json({ error: `Unsupported export format: ${format}` });
     }

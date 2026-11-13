@@ -184,9 +184,9 @@ async function runTestSuite() {
     assert(updated.sections[0].content.includes('Clarification regarding RFC 9110 Section 9.3.1'), 'Fix must be applied into target section');
   });
 
-  // SECTION 7: Multi-Format Exports
-  console.log(`\n--- Suite 7: Multi-Format Exports ---`);
-  it('Exports to Markdown with full pacing, content, videos, references, and QC appendices', () => {
+  // SECTION 7: Multi-Format Exports (Complete Lesson Only)
+  console.log(`\n--- Suite 7: Multi-Format Exports (Complete Lesson Only) ---`);
+  it('Exports to Markdown with complete lesson content, timing, lab, quiz, videos, and references', () => {
     const fullRecord = {
       lessonTitle: 'HTTP Requests and Responses',
       learningObjective: 'Explain GET and POST methods and distinguish between 2xx, 4xx, and 5xx response status categories.',
@@ -195,14 +195,12 @@ async function runTestSuite() {
       qc2Report
     };
 
-    const markdown = exportService.toMarkdown(fullRecord, { includeQC: true });
+    const markdown = exportService.toMarkdown(fullRecord);
     assert(markdown.includes('# HTTP Requests and Responses'), 'Markdown must include title');
     assert(markdown.includes('45-Minute Lesson Pacing Breakdown'), 'Markdown must include pacing table');
-    assert(markdown.includes('Supplementary Video Resources'), 'Markdown must include videos');
+    assert(markdown.includes('Supplementary Video Masterclasses'), 'Markdown must include videos');
     assert(markdown.includes('Authoritative References'), 'Markdown must include references');
-    assert(markdown.includes('APPENDIX: QUALITY CONTROL AUDIT REPORTS'), 'Markdown must include QC appendix');
-    assert(markdown.includes('QC Layer 1: Research and Factual Accuracy Audit'), 'Must include QC1 report');
-    assert(markdown.includes('QC Layer 2: Instructional Quality & Pacing Audit'), 'Must include QC2 report');
+    assert(!markdown.includes('APPENDIX: QUALITY CONTROL AUDIT REPORTS'), 'Export must only provide the complete lesson, not QC reports');
   });
 
   it('Exports to self-contained HTML with print styles', () => {
@@ -214,7 +212,7 @@ async function runTestSuite() {
       qc2Report
     };
 
-    const html = exportService.toHTML(fullRecord, { includeQC: true });
+    const html = exportService.toHTML(fullRecord);
     assert(html.includes('<!DOCTYPE html>'), 'Must produce valid HTML document');
     assert(html.includes('HTTP Requests and Responses'), 'HTML must include lesson title');
     assert(html.includes('@media print'), 'HTML must include printable styles');

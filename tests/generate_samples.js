@@ -65,8 +65,8 @@ async function runSample(lessonTitle, learningObjective, filePrefix) {
     updatedAt: new Date().toISOString()
   };
 
-  // Export Combined Lesson Markdown
-  const lessonMd = exportService.toMarkdown(lessonRecord, { includeQC: true });
+  // Export Complete Lesson Markdown
+  const lessonMd = exportService.toMarkdown(lessonRecord);
   fs.writeFileSync(path.join(OUTPUT_DIR, `${filePrefix}_lesson.md`), lessonMd, 'utf-8');
 
   // Export Isolated QC1 Report
@@ -136,7 +136,7 @@ async function runSample(lessonTitle, learningObjective, filePrefix) {
   fs.writeFileSync(path.join(OUTPUT_DIR, `${filePrefix}_complete_package.json`), JSON.stringify(lessonRecord, null, 2), 'utf-8');
 
   // Export HTML format
-  const htmlDoc = exportService.toHTML(lessonRecord, { includeQC: true });
+  const htmlDoc = exportService.toHTML(lessonRecord);
   fs.writeFileSync(path.join(OUTPUT_DIR, `${filePrefix}_lesson.html`), htmlDoc, 'utf-8');
 
   console.log(`✅ Finished generating artifacts for ${lessonTitle}`);
