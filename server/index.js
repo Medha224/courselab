@@ -363,14 +363,31 @@ app.get('/api/lesson/:id', (req, res) => {
   res.json({ success: true, lesson });
 });
 
-// Delete a saved lesson by ID
-app.delete('/api/lesson/:id', (req, res) => {
+// Delete a saved lesson by ID (supports /api/lesson/:id and /api/lessons/:id)
+const deleteLessonHandler = (req, res) => {
   try {
     const { id } = req.params;
-    const filePath = path.join(STORAGE_DIR, `${id}.json`);
+    let filePath = path.join(STORAGE_DIR, `${id}.json`);
+
+    // Check direct path or find file where data.id matches
+    if (!fs.existsSync(filePath)) {
+      const files = fs.readdirSync(STORAGE_DIR).filter(f => f.endsWith('.json'));
+      const matchingFile = files.find(f => {
+        try {
+          const d = JSON.parse(fs.readFileSync(path.join(STORAGE_DIR, f), 'utf-8'));
+          return d.id === id;
+        } catch (e) {
+          return false;
+        }
+      });
+      if (matchingFile) {
+        filePath = path.join(STORAGE_DIR, matchingFile);
+      }
+    }
+
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
-      console.log(`[API] Deleted saved lesson: ${id}`);
+      console.log(`[API] Deleted saved lesson: ${id} (${path.basename(filePath)})`);
       return res.json({ success: true, message: 'Lesson deleted successfully.' });
     }
     return res.status(404).json({ error: 'Lesson not found.' });
@@ -378,7 +395,10 @@ app.delete('/api/lesson/:id', (req, res) => {
     console.error('[API] Delete error:', err);
     res.status(500).json({ error: 'Failed to delete lesson.' });
   }
-});
+};
+
+app.delete('/api/lesson/:id', deleteLessonHandler);
+app.delete('/api/lessons/:id', deleteLessonHandler);
 
 // List all saved lessons
 app.get('/api/lessons', (req, res) => {
@@ -441,6 +461,11 @@ app.post('/api/lesson/export/:format', (req, res) => {
     console.error('[API] Export error:', err);
     res.status(500).json({ error: err.message || 'Export failed.' });
   }
+});
+
+// Always return JSON for unmatched /api routes
+app.use('/api', (req, res) => {
+  res.status(404).json({ error: `API route ${req.method} ${req.originalUrl} not found.` });
 });
 
 // Serve frontend in production or when client is built

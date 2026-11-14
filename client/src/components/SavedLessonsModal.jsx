@@ -30,8 +30,16 @@ export default function SavedLessonsModal({ onClose, onLoadLesson, onDeleteLesso
     setDeletingId(id);
     try {
       const res = await fetch(`/api/lesson/${id}`, { method: 'DELETE' });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to delete lesson');
+      let data = {};
+      try {
+        data = await res.json();
+      } catch (jsonErr) {
+        // Fallback for non-JSON text error
+      }
+
+      if (!res.ok) {
+        throw new Error(data.error || `Server responded with status ${res.status}`);
+      }
 
       setLessons(prev => prev.filter(l => l.id !== id));
       if (onDeleteLesson) {
