@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { X, FolderArchive, ArrowRight, ShieldCheck, Award, Clock } from 'lucide-react';
+import { X, FolderArchive, ArrowRight, ShieldCheck, Award, Clock, Trash2 } from 'lucide-react';
 
-export default function SavedLessonsModal({ onClose, onLoadLesson }) {
+export default function SavedLessonsModal({ onClose, onLoadLesson, onDeleteLesson }) {
   const [lessons, setLessons] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [deletingId, setDeletingId] = useState(null);
 
   useEffect(() => {
+    fetchLessons();
+  }, []);
+
+  const fetchLessons = () => {
     fetch('/api/lessons')
       .then(r => r.json())
       .then(d => {
@@ -16,7 +21,28 @@ export default function SavedLessonsModal({ onClose, onLoadLesson }) {
         console.error('Failed to load lessons:', err);
         setLoading(false);
       });
-  }, []);
+  };
+
+  const handleDelete = async (id, title) => {
+    const confirmed = window.confirm(`Are you sure you want to delete "${title || 'this lesson'}"?\n\nThis will permanently delete the saved lesson.`);
+    if (!confirmed) return;
+
+    setDeletingId(id);
+    try {
+      const res = await fetch(`/api/lesson/${id}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to delete lesson');
+
+      setLessons(prev => prev.filter(l => l.id !== id));
+      if (onDeleteLesson) {
+        onDeleteLesson(id);
+      }
+    } catch (err) {
+      alert('Error deleting lesson: ' + err.message);
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   return (
     <div className="edu-modal-overlay" onClick={onClose}>
@@ -59,10 +85,11 @@ export default function SavedLessonsModal({ onClose, onLoadLesson }) {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  gap: '14px'
+                  flexWrap: 'wrap',
+                  gap: '12px'
                 }}
               >
-                <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ flex: 1, minWidth: '240px' }}>
                   <h4 style={{ fontSize: '0.95rem', fontWeight: 800, margin: '0 0 3px', color: 'var(--text-dark)' }}>
                     {item.lessonTitle}
                   </h4>
@@ -87,18 +114,39 @@ export default function SavedLessonsModal({ onClose, onLoadLesson }) {
                   </div>
                 </div>
 
-                <button
-                  type="button"
-                  className="edu-btn edu-btn-dark"
-                  onClick={() => {
-                    onLoadLesson(item.id);
-                    onClose();
-                  }}
-                  style={{ padding: '7px 14px', fontSize: '0.75rem' }}
-                >
-                  <span>Load</span>
-                  <ArrowRight size={13} />
-                </button>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  {/* Delete Button */}
+                  <button
+                    type="button"
+                    className="edu-btn edu-btn-outline"
+                    onClick={() => handleDelete(item.id, item.lessonTitle)}
+                    disabled={deletingId === item.id}
+                    title="Delete saved lesson"
+                    style={{
+                      padding: '7px 12px',
+                      fontSize: '0.75rem',
+                      color: '#dc2626',
+                      borderColor: '#fca5a5'
+                    }}
+                  >
+                    <Trash2 size={13} />
+                    <span>{deletingId === item.id ? 'Deleting...' : 'Delete'}</span>
+                  </button>
+
+                  {/* Load Button */}
+                  <button
+                    type="button"
+                    className="edu-btn edu-btn-dark"
+                    onClick={() => {
+                      onLoadLesson(item.id);
+                      onClose();
+                    }}
+                    style={{ padding: '7px 14px', fontSize: '0.75rem' }}
+                  >
+                    <span>Load</span>
+                    <ArrowRight size={13} />
+                  </button>
+                </div>
               </div>
             ))}
           </div>

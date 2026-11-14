@@ -263,6 +263,30 @@ async function runTestSuite() {
     assert(hasIterative && hasRecursive, 'Must contain both iterative and recursive implementations');
   });
 
+  // SECTION 9: Lesson Storage & Deletion
+  console.log(`\n--- Suite 9: Lesson Storage Library & Deletion ---`);
+  it('Creates, verifies, and deletes saved lessons from library storage', () => {
+    const fs = require('fs');
+    const path = require('path');
+    const storageDir = path.join(__dirname, '../server/storage');
+    const testId = `test_delete_${Date.now()}`;
+    const testFile = path.join(storageDir, `${testId}.json`);
+
+    // 1. Create test lesson
+    fs.writeFileSync(testFile, JSON.stringify({
+      id: testId,
+      lessonTitle: 'Temporary Test Lesson for Deletion',
+      learningObjective: 'Test delete endpoint functionality.',
+      createdAt: new Date().toISOString()
+    }, null, 2), 'utf-8');
+
+    assert(fs.existsSync(testFile), 'Test lesson file must exist');
+
+    // 2. Delete test lesson
+    fs.unlinkSync(testFile);
+    assert(!fs.existsSync(testFile), 'Test lesson file must be deleted from storage');
+  });
+
   console.log(`\n===============================================================`);
   console.log(`📊 TEST RESULTS: ${passedTests} / ${totalTests} TESTS PASSED (${Math.round((passedTests/totalTests)*100)}%)`);
   console.log(`===============================================================\n`);

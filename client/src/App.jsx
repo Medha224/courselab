@@ -570,6 +570,12 @@ export default function App() {
         <SavedLessonsModal
           onClose={() => setShowLibrary(false)}
           onLoadLesson={handleLoadLesson}
+          onDeleteLesson={(deletedId) => {
+            if (lesson?.id === deletedId) {
+              // Detach saved id so working draft is preserved as unsaved draft
+              setLesson(prev => prev ? { ...prev, id: `draft_${Date.now()}` } : null);
+            }
+          }}
         />
       )}
     </div>

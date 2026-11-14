@@ -205,17 +205,6 @@ export default function ExportModal({ lesson, onClose }) {
             </button>
           </div>
         </div>
-
-        <div style={{ textAlign: 'right' }}>
-          <button
-            type="button"
-            className="edu-btn edu-btn-outline"
-            onClick={onClose}
-            style={{ fontSize: '0.8rem', padding: '8px 18px' }}
-          >
-            Close
-          </button>
-        </div>
       </div>
     </div>
   );

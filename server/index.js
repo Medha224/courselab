@@ -363,6 +363,23 @@ app.get('/api/lesson/:id', (req, res) => {
   res.json({ success: true, lesson });
 });
 
+// Delete a saved lesson by ID
+app.delete('/api/lesson/:id', (req, res) => {
+  try {
+    const { id } = req.params;
+    const filePath = path.join(STORAGE_DIR, `${id}.json`);
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+      console.log(`[API] Deleted saved lesson: ${id}`);
+      return res.json({ success: true, message: 'Lesson deleted successfully.' });
+    }
+    return res.status(404).json({ error: 'Lesson not found.' });
+  } catch (err) {
+    console.error('[API] Delete error:', err);
+    res.status(500).json({ error: 'Failed to delete lesson.' });
+  }
+});
+
 // List all saved lessons
 app.get('/api/lessons', (req, res) => {
   try {
@@ -438,9 +455,12 @@ if (fs.existsSync(clientDist)) {
   });
 }
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`=======================================================`);
   console.log(`🚀 AI Lesson Creation Server is running on port ${PORT}`);
   console.log(`   API Endpoint: http://localhost:${PORT}/api/health`);
   console.log(`=======================================================`);
 });
+
+// Ensure process stays active indefinitely for background daemon execution
+setInterval(() => {}, 60000);
